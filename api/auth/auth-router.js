@@ -5,7 +5,7 @@ const { checkUsernameExists, checkUsernameAndPassword } = require('./auth-middle
 const jwt = require('jsonwebtoken')
 const { jwtSecret } = require('../auth/secrets')
 
-router.post('/register', async (req, res, next) => {
+router.post('/register', checkUsernameAndPassword, async (req, res, next) => {
   try {
     const { username, password } = req.body
     const rounds = process.env.BCRYPT_ROUNDS || 8
