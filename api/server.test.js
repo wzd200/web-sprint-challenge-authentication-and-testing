@@ -1,5 +1,7 @@
 const db = require('../data/dbConfig')
 const Users = require('./auth/auth-model')
+const request = require('supertest')
+const server = require('./server')
 
 
 test('sanity', () => {
@@ -17,7 +19,7 @@ afterAll(async () => {
   await db.destroy()
 })
 
-describe('register new user tests', () => {
+describe('register tests', () => {
   test('endpoint registers a new user in the db', async () => {
     const newUser = {
       username: 'Jimbo',
@@ -38,3 +40,19 @@ describe('register new user tests', () => {
     expect(insertedUser).toMatchObject(newUser)
   })
 })
+
+// describe('login tests', () => {
+//   test('responds with status code 201', async () => {
+    
+//     const res = await request(server).post('/api/auth/login').send({
+//       username: 'Hal',
+//       password: '1234'
+//     })
+//     expect(res.status).toBe(201)
+//   })
+
+//   test('responds with logged in user', async () => {
+    
+//  
+//   })
+// })
