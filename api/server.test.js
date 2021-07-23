@@ -1,4 +1,5 @@
 const db = require('../data/dbConfig')
+const Users = require('./auth/auth-model')
 
 
 test('sanity', () => {
@@ -14,4 +15,26 @@ beforeAll(async () => {
 })
 afterAll(async () => {
   await db.destroy()
+})
+
+describe('register new user tests', () => {
+  test('endpoint registers a new user in the db', async () => {
+    const newUser = {
+      username: 'Jimbo',
+      password: '1234'
+    }
+    await Users.add(newUser)
+    const insertedUser = await db('users')
+      .where('id', 1).first()
+    expect(insertedUser).toMatchObject(newUser)
+  })
+
+  test('endpoint resolves to the newly created user', async () => {
+    const newUser = {
+      username: 'Hal',
+      password: '1234'
+    }
+    const insertedUser = await Users.add(newUser)
+    expect(insertedUser).toMatchObject(newUser)
+  })
 })
