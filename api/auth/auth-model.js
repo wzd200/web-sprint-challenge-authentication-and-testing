@@ -13,7 +13,7 @@ async function add(user) {
 function findById(id) {
     return db("users as u")
       .where("u.id", id)
-      .first();
+      .first()
 }
 
 module.exports = {

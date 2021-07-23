@@ -16,10 +16,7 @@ router.post('/register', checkUsernameAndPassword, async (req, res, next) => {
     }
 
     const dbUser = await Users.add(newUser)
-    res.status(201).json({
-      message: `Welcome, ${username}`,
-      user: dbUser,
-    })
+    res.status(201).json(dbUser)
   } catch (err) {
     next(err)
   }
