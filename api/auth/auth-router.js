@@ -47,7 +47,7 @@ router.post('/register', checkUsernameAndPassword, checkUsernameFree, async (req
   */
 });
 
-router.post('/login', checkUsernameExists, checkUsernameAndPassword, (req, res, next) => {
+router.post('/login', checkUsernameAndPassword, checkUsernameExists, (req, res, next) => {
   if (bcrypt.compareSync(req.body.password, req.user.password)) {
     const token = buildToken(req.user)
     res.json({
