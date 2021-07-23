@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const Users = require('./auth-model')
 const bcrypt = require('bcryptjs')
-const { checkUsernameExists, checkUsernameAndPassword } = require('./auth-middleware')
+const { checkUsernameExists, checkUsernameAndPassword, checkUsernameFree } = require('./auth-middleware')
 const jwt = require('jsonwebtoken')
 const { jwtSecret } = require('../auth/secrets')
 
-router.post('/register', checkUsernameAndPassword, async (req, res, next) => {
+router.post('/register', checkUsernameAndPassword, checkUsernameFree, async (req, res, next) => {
   try {
     const { username, password } = req.body
     const rounds = process.env.BCRYPT_ROUNDS || 8

@@ -34,7 +34,25 @@ const checkUsernameAndPassword = (req, res, next) => {
     }
 }
 
+async function checkUsernameFree(req, res, next) {
+    try {
+      const users = await
+        findBy({ username: req.body.username })
+      if (!users.length) {
+        next()
+      } else {
+        next({ 
+          status: 422, 
+          message: 'username taken' 
+        })
+      }
+    } catch (err) {
+      next(err)
+    }
+}
+
 module.exports = {
     checkUsernameExists,
-    checkUsernameAndPassword
+    checkUsernameAndPassword,
+    checkUsernameFree
 }
